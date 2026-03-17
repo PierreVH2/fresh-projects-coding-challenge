@@ -1,0 +1,12 @@
+<div class="floor-plan">
+  <img [src]="image()" alt="Floor plan" />
+  <svg>
+    @for (entry of objectEntries(regions()); track entry[0]) {
+      <polygon
+        [attr.points]="toPoints(entry[1])"
+        [attr.data-room]="entry[0]"
+        (click)="roomClick.emit(entry[0])"
+      />
+    }
+  </svg>
+</div>
