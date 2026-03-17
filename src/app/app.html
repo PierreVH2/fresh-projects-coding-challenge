@@ -1,1 +1,8 @@
-<app-floor-plan image="/assets/841_2160_clean.jpg" [regions]="{}"></app-floor-plan>
+<app-floor-plan image="/assets/841_2160_clean.jpg" [regions]="{
+  'hall': [[60,280], [230,280], [230,400], [60,400]],
+  'kitchen': [[60,400], [230,400], [230,600], [60,600]],
+  'bathroom': [[60,40], [230,40], [230,280], [60,280]],
+  'bedroom': [[230,40], [660,40], [660,280], [230,280]],
+  'lounge': [[230,280], [780,280], [780,600], [230,600]],
+  'balcony': [[660,40], [780,40], [780,280], [660,280]],
+}" (roomClick)="handleRoomClick($event)"></app-floor-plan>
