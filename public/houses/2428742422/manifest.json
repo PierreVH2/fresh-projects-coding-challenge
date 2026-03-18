@@ -1,0 +1,35 @@
+{
+  "address": "1603 Plane St, Engcobo, 5056",
+  "coordinates": {
+    "lat": -31.6667,
+    "lng": 28.0000
+  },
+  "basePath": "/houses/2428742422",
+  "floorPlan": "841_2160_clean.jpg",
+  "rooms": {
+    "hall": {
+      "vertices": [[60,280], [230,280], [230,400], [60,400]],
+      "images": []
+    },
+    "kitchen": {
+      "vertices": [[60,400], [230,400], [230,600], [60,600]],
+      "images": []
+    },
+    "bathroom": {
+      "vertices": [[60,40], [230,40], [230,280], [60,280]],
+      "images": []
+    },
+    "bedroom": {
+      "vertices": [[230,40], [660,40], [660,280], [230,280]],
+      "images": []
+    },
+    "lounge": {
+      "vertices": [[230,280], [780,280], [780,600], [230,600]],
+      "images": []
+    },
+    "balcony": {
+      "vertices": [[660,40], [780,40], [780,280], [660,280]],
+      "images": []
+    }
+  }
+}
