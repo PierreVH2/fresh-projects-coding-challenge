@@ -1,0 +1,5 @@
+<div>
+    @for (image of images(); track image) {
+      <img width="50%" [src]="image" [alt]="roomName + '/' + $index" />
+    }
+</div>

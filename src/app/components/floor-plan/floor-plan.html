@@ -1,11 +1,13 @@
 <div class="floor-plan">
   <img [src]="image()" alt="Floor plan" />
   <svg>
-    @for (entry of objectEntries(regions()); track entry[0]) {
+    @for (item of regionsArray() | keyvalue; track item.key) {
       <polygon
-        [attr.points]="toPoints(entry[1])"
-        [attr.data-room]="entry[0]"
-        (click)="roomClick.emit(entry[0])"
+        [attr.points]="item.value"
+        [attr.data-room]="item.key"
+        (click)="roomClick.emit(item.key)"
+        (mouseenter)="onMouseRoomEnter(item.key)"
+        (mouseleave)="onMouseRoomLeave()"
       />
     }
   </svg>

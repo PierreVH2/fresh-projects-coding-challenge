@@ -1,0 +1,9 @@
+.app-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.floor-plan-container, .image-gallery-container {
+  flex-basis: 50%;
+  box-sizing: border-box;
+}

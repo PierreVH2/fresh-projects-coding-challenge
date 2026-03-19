@@ -2,10 +2,10 @@ import { Injectable, Signal, computed, signal } from '@angular/core';
 import { httpResource, HttpResourceRef } from '@angular/common/http';
 import { StaticDecode, Type } from 'typebox';
 import { Decode, Errors } from 'typebox/value';
-import { toObservable } from '@angular/core/rxjs-interop';
 
 const HousesListSchema = Type.Array(Type.String());
 const HouseManifestSchema = Type.Object({
+  id: Type.String(),
   address: Type.String(),
   coordinates: Type.Optional({
     lat: Type.Number(),
@@ -28,7 +28,7 @@ export class HousesService {
     parse: (data) => Decode(HousesListSchema, data)
   });
 
-  houseManifests = computed(() =>
+  readonly houseManifests = computed(() =>
     (this.houseList.value() ?? []).reduce<Record<string,HttpResourceRef<HouseManifest | undefined>>>((accum, url) => ({
       ...accum,
       [url]: httpResource(() => url, {
@@ -37,9 +37,21 @@ export class HousesService {
     }), {})
   );
 
+  hoverRoomName = signal('');
+
   // house = computed(() => this.houseManifests()[this.houseList.value()?.[0] ?? '']);
-  house = httpResource<HouseManifest|undefined>(() => '/houses/2428742422/manifest.json', {
+  private readonly _house = httpResource<HouseManifest|undefined>(() => '/houses/2428742422/manifest.json', {
     parse: (data) => Decode(HouseManifestSchema, data)
+  });
+
+  get house() {
+    return this._house.value;
+  }
+
+  readonly hoveredRoom = computed(() => {
+    const house = this.house();
+    const roomName = this.hoverRoomName();
+    return house?.rooms[roomName];
   });
 
   public getHouseManifest = (url: string): Signal<HouseManifest | undefined> => {
