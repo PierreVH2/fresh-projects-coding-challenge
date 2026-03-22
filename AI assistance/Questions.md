@@ -31,3 +31,17 @@ In HouseService add another signal that cycles through the available rooms every
 modify image-gallery such that it gets its orientation parameter ('vertical' / 'horizontal') as an input from App rather than reading it from HouseService. Also remove the dependency on HouseService.breakpoint by making it render 2 columns if in vertical orientation and the width is less than 768 px and similarly for rows in horizontal
 
 I made some changes to better align with what I want but now I'm getting an error "Cannot read properties of undefined (reading 'nativeElement')" on line 32 of image-gallery.ts
+
+[CANCELLED BEFORE COMPLETION] Add "auto scroll" functionality to the image-gallery component that scrolls the track from start to finish over a few seconds (whatever implementation approach is easiest). It must be activated using an optional input parameter that defaults to false. The scrolling should pause if the user hovers over the image-gallery component.
+
+Additional requirement: the image-gallery component should emit a signal when auto-scroll is active and the end of the track is reached.
+
+I'm occasionally getting an error in Angular "image-gallery.html:2 NG0956: The configured tracking expression (track by identity) caused re-creation of the entire collection of size 1. This is an expensive operation requiring destruction and subsequent creation of DOM nodes, directives, components etc. Please review the "track expression" and make sure that it uniquely identifies items in a collection"
+
+Modifty auto-scroll such that if there is not enough content to scroll, then the scrollEnd event should emit when a length of time has passed equivalent to the width of the component considering autoScrollPxPerFrame
+
+In App component add a check box for activating autoscrolling to the image-gallery-container div and fix the layout. The image-gallery-heading component should be top-left, the check box top-right aligning side-by-side if there is enough space and check box below the heading if the view is too narrow, followed by the image-gallery component occupying max height.
+
+The autoscroll seems to be broken
+
+Undo the changes from portrait -> horizontal and vertical -> landscaope - they were correct (they refer to the preferred scroll direction)

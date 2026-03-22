@@ -1,10 +1,10 @@
-import { KeyValuePipe } from '@angular/common';
+import { KeyValuePipe, TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, input, output } from '@angular/core';
 import { HousesService } from '../../services/houses';
 
 @Component({
   selector: 'app-floor-plan',
-  imports: [KeyValuePipe],
+  imports: [KeyValuePipe, TitleCasePipe],
   templateUrl: './floor-plan.html',
   styleUrl: './floor-plan.css',
   standalone: true,

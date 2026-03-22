@@ -39,27 +39,11 @@ export class HousesService {
 
   hoverRoomName = signal('');
   clickedRoomName = signal('');
-
-  private readonly _cycleIndex = signal(0);
-  readonly cycleRoomName = computed(() => {
-    const rooms = this.house()?.rooms;
-    if (!rooms) return '';
-    const keys = Object.keys(rooms);
-    return keys[this._cycleIndex() % keys.length] ?? '';
-  });
+  defaultRoom = signal('');
 
   readonly activeRoomName = computed(() =>
-    this.clickedRoomName() || this.hoverRoomName() || this.cycleRoomName()
+    this.clickedRoomName() || this.hoverRoomName() || this.defaultRoom()
   );
-
-  constructor() {
-    effect((onCleanup) => {
-      // restart interval whenever house rooms change
-      this.house();
-      const id = setInterval(() => this._cycleIndex.update((i) => i + 1), 3000);
-      onCleanup(() => clearInterval(id));
-    });
-  }
 
   private readonly _house = httpResource<HouseManifest|undefined>(() => '/houses/2428742422/manifest.json', {
     parse: (data) => Decode(HouseManifestSchema, data)

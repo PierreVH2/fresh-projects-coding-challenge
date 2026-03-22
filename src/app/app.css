@@ -22,10 +22,38 @@
 .image-gallery-container {
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
+  flex-direction: column;
+  overflow: hidden;
   min-height: 0;
+}
+
+.image-gallery-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  flex-shrink: 0;
+}
+
+.image-gallery-heading {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.autoscroll-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+app-image-gallery {
+  flex: 1;
+  min-height: 0;
+  min-width: 0;
 }
 
 /* --- Horizontal layout --- */
@@ -38,8 +66,7 @@
 .side-by-side .image-gallery-container {
   flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: auto;
+  flex-direction: column;
+  overflow: hidden;
   min-width: 0;
 }

@@ -1,5 +1,5 @@
 <div #imageTrack class="image-track" [class]="[orientation(), double() ? 'double' : 'single']">
-    @for (image of images(); track image) {
+    @for (image of images(); track $index) {
       <img [src]="image" [alt]="roomName + '/' + $index" />
     }
 </div>

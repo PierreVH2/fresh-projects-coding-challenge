@@ -18,38 +18,38 @@ div.image-track img {
   object-fit: contain;
 }
 
-div.image-track.landscape {
+div.image-track.vertical {
   flex-direction: row;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
-div.image-track.portrait {
+div.image-track.horizontal {
   flex-direction: column;
   overflow-y: hidden;
   overflow-x: auto;
 }
 
-div.image-track.landscape img {
+div.image-track.vertical img {
   max-height: 100%;
 }
 
-div.image-track.landscape.single img {
+div.image-track.vertical.single img {
   max-width: 100%;
 }
 
-div.image-track.landscape.double img {
+div.image-track.vertical.double img {
   max-width: calc(50% - 2px);
 }
 
-div.image-track.portrait img {
+div.image-track.horizontal img {
   max-width: 100%;
 }
 
-div.image-track.portrait.single img {
+div.image-track.horizontal.single img {
   max-height: 100%;
 }
 
-div.image-track.portrait.double img {
+div.image-track.horizontal.double img {
   max-height: calc(50% - 2px);
 }

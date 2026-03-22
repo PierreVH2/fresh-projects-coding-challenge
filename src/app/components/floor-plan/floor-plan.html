@@ -16,7 +16,7 @@
         dominant-baseline="middle"
         text-anchor="middle"
         [attr.transform]="item.value.rotate ? 'rotate(-90,' + item.value.cx + ',' + item.value.cy + ')' : null"
-      >{{ item.key }}</text>
+      >{{ item.key | titlecase }}</text>
     }
   </svg>
 </div>
