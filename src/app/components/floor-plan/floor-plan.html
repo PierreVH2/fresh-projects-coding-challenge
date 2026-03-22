@@ -1,14 +1,22 @@
 <div class="floor-plan">
   <img [src]="image()" alt="Floor plan" />
-  <svg>
+  <svg viewBox="0 0 1 1" preserveAspectRatio="none">
     @for (item of regionsArray() | keyvalue; track item.key) {
       <polygon
-        [attr.points]="item.value"
+        [attr.points]="item.value.points"
         [attr.data-room]="item.key"
+        [class.active]="activeRoomName() === item.key"
         (click)="roomClick.emit(item.key)"
         (mouseenter)="onMouseRoomEnter(item.key)"
         (mouseleave)="onMouseRoomLeave()"
       />
+      <text
+        [attr.x]="item.value.cx"
+        [attr.y]="item.value.cy"
+        dominant-baseline="middle"
+        text-anchor="middle"
+        [attr.transform]="item.value.rotate ? 'rotate(-90,' + item.value.cx + ',' + item.value.cy + ')' : null"
+      >{{ item.key }}</text>
     }
   </svg>
 </div>

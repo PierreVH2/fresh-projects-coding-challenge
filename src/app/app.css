@@ -1,9 +1,45 @@
 .app-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  height: 100dvh;
+  width: 100vw;
+  overflow: hidden;
 }
 
-.floor-plan-container, .image-gallery-container {
-  flex-basis: 50%;
-  box-sizing: border-box;
+.app-container.side-by-side {
+  flex-direction: row;
+  align-items: stretch;
+}
+
+/* --- Vertical layout --- */
+.floor-plan-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-gallery-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  min-height: 0;
+}
+
+/* --- Horizontal layout --- */
+.side-by-side .floor-plan-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.side-by-side .image-gallery-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: auto;
+  min-width: 0;
 }

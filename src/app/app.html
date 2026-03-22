@@ -1,12 +1,12 @@
-<div class="app-container">
+<div class="app-container" [class.side-by-side]="sideBySide()">
   <div class="floor-plan-container">
     <app-floor-plan
-      [image]="houseImage()"
+      [image]="houseFloorPlan()"
       [regions]="houseRegions()"
       (roomClick)="handleRoomClick($event)"
     ></app-floor-plan>
   </div>
   <div class="image-gallery-container">
-    <app-image-gallery></app-image-gallery>
+    <app-image-gallery [orientation]="sideBySide() ? 'landscape' : 'portrait'"></app-image-gallery>
   </div>
 </div>

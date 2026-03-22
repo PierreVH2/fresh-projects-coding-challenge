@@ -1,4 +1,4 @@
-import { Injectable, Signal, computed, signal } from '@angular/core';
+import { Injectable, Signal, computed, effect, signal } from '@angular/core';
 import { httpResource, HttpResourceRef } from '@angular/common/http';
 import { StaticDecode, Type } from 'typebox';
 import { Decode, Errors } from 'typebox/value';
@@ -38,8 +38,29 @@ export class HousesService {
   );
 
   hoverRoomName = signal('');
+  clickedRoomName = signal('');
 
-  // house = computed(() => this.houseManifests()[this.houseList.value()?.[0] ?? '']);
+  private readonly _cycleIndex = signal(0);
+  readonly cycleRoomName = computed(() => {
+    const rooms = this.house()?.rooms;
+    if (!rooms) return '';
+    const keys = Object.keys(rooms);
+    return keys[this._cycleIndex() % keys.length] ?? '';
+  });
+
+  readonly activeRoomName = computed(() =>
+    this.clickedRoomName() || this.hoverRoomName() || this.cycleRoomName()
+  );
+
+  constructor() {
+    effect((onCleanup) => {
+      // restart interval whenever house rooms change
+      this.house();
+      const id = setInterval(() => this._cycleIndex.update((i) => i + 1), 3000);
+      onCleanup(() => clearInterval(id));
+    });
+  }
+
   private readonly _house = httpResource<HouseManifest|undefined>(() => '/houses/2428742422/manifest.json', {
     parse: (data) => Decode(HouseManifestSchema, data)
   });
@@ -48,9 +69,9 @@ export class HousesService {
     return this._house.value;
   }
 
-  readonly hoveredRoom = computed(() => {
+  readonly activeRoom = computed(() => {
     const house = this.house();
-    const roomName = this.hoverRoomName();
+    const roomName = this.activeRoomName();
     return house?.rooms[roomName];
   });
 
