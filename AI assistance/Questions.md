@@ -45,3 +45,5 @@ In App component add a check box for activating autoscrolling to the image-galle
 The autoscroll seems to be broken
 
 Undo the changes from portrait -> horizontal and vertical -> landscaope - they were correct (they refer to the preferred scroll direction)
+
+Make the global font Robot/Sans serif and make this themable

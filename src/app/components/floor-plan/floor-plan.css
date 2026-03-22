@@ -30,11 +30,11 @@ polygon {
 }
 
 polygon:hover {
-  fill: rgba(0, 0, 0, 0.08);
+  fill: var(--color-hover);
 }
 
 polygon.active {
-  fill: rgba(0, 120, 255, 0.35);
+  fill: var(--color-accent);
 }
 
 text {

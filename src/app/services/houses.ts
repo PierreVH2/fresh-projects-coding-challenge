@@ -24,19 +24,6 @@ type HouseManifest = StaticDecode<typeof HouseManifestSchema>;
   providedIn: 'root',
 })
 export class HousesService {
-  houseList = httpResource<string[]>(() => '/house-list.json', {
-    parse: (data) => Decode(HousesListSchema, data)
-  });
-
-  readonly houseManifests = computed(() =>
-    (this.houseList.value() ?? []).reduce<Record<string,HttpResourceRef<HouseManifest | undefined>>>((accum, url) => ({
-      ...accum,
-      [url]: httpResource(() => url, {
-        parse: (data) => Decode(HouseManifestSchema, data)
-      })
-    }), {})
-  );
-
   hoverRoomName = signal('');
   clickedRoomName = signal('');
   defaultRoom = signal('');
@@ -58,9 +45,4 @@ export class HousesService {
     const roomName = this.activeRoomName();
     return house?.rooms[roomName];
   });
-
-  public getHouseManifest = (url: string): Signal<HouseManifest | undefined> => {
-    // Inside this function, a new computed signal is created and returned
-    return computed(() => this.houseManifests()[url]?.value());
-  };
 }
