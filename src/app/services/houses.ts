@@ -18,7 +18,7 @@ const HouseManifestSchema = Type.Object({
     images: Type.Array(Type.String()),
   }))
 });
-type HouseManifest = StaticDecode<typeof HouseManifestSchema>;
+export type HouseManifest = StaticDecode<typeof HouseManifestSchema>;
 
 @Injectable({
   providedIn: 'root',

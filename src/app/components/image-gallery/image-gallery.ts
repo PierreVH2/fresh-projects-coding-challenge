@@ -50,7 +50,7 @@ export class ImageGallery implements AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.resizeObserver.disconnect();
+    this.resizeObserver?.disconnect?.();
     this.stopScroll();
   }
 
@@ -95,7 +95,7 @@ export class ImageGallery implements AfterViewInit, OnDestroy {
   }
 
   readonly images = computed(() => this.housesService.activeRoom()?.images?.map((i) => `${this.housesService.house()?.basePath}/${i}`) ?? []);
-  readonly roomName = computed(() => this.housesService.hoverRoomName() ?? '');
+  readonly roomName = computed(() => this.housesService.activeRoomName() ?? '');
 
   readonly double = computed(() => {
     const criticalDimension = this.orientation() === 'horizontal' ? this.dimensions().width : this.dimensions().height;

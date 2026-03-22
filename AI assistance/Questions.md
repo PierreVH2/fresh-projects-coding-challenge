@@ -47,3 +47,31 @@ The autoscroll seems to be broken
 Undo the changes from portrait -> horizontal and vertical -> landscaope - they were correct (they refer to the preferred scroll direction)
 
 Make the global font Robot/Sans serif and make this themable
+
+Add some unit tests for the Houses service
+
+I prefer an alternative structure: Instead of specifying a variable being tested in the "describe", use "describe" to specify pre-conditions for the test and the 'it' should state the expected outcome. Also note that an "it" should only rarely contain more than one expectation. Eg. instead of describe('activeRoom') -> it('prefers clickedRoomName over hoverRoomName and defaultRoom'), have describe('and clickedRoomName is not null') -> it('should set activeRoom to clickedRoomName') . Apply this restructuring to houses.spec.ts
+
+Please write the unit tests for the ImageGallery component.
+
+There's an error on image-gallery.ts line 35 - "ReferenceError: ResizeObserver is not defined"
+
+Add a mock for HousesService
+
+Keeping in mind the corrections I have made directly and requested of you, write appropriate unit tests for the FloorPlan component
+
+Check floor-plan.spec.ts line 95 - fixture.nativeElement.querySelector('polygon').click() - .click is not a function
+
+Great. Next write the unit tests for App component.
+
+Add mocks for the two external components used by App
+
+None of the cases where you use gallery.getAttribute work correctly, in all cases the test return "expected null to be <something>"
+
+The test "should pass the floor plan image url to floor-plan" is also failing - no actual 'img' HTML node will be created due to the component being mocked. Find another way to test this.
+
+Next write some unit tests for the Responsive service
+
+Lastly have another look at the houses.spec.ts file - double check that everything should work correctly for an Angular 21 project.
+
+All the unit tests are failing with an error " Expected one matching request for criteria "Match URL: /houses/2428742422/manifest.json", found none"
