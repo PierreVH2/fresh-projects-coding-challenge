@@ -1,5 +1,5 @@
-import { KeyValuePipe, TitleCasePipe } from '@angular/common';
 import { Component, computed, inject, input, output } from '@angular/core';
+import { KeyValuePipe, TitleCasePipe } from '@angular/common';
 import { HousesService } from '../../services/houses';
 
 @Component({
@@ -10,14 +10,16 @@ import { HousesService } from '../../services/houses';
   standalone: true,
 })
 export class FloorPlan {
-  housesService: HousesService = inject(HousesService);
+  private housesService = inject(HousesService);
 
   image = input.required<string>();
   regions = input.required<Record<string, [number, number][]>>();
   roomClick = output<string>();
 
-  readonly regionsArray = computed(
-    () => Object.entries(this.regions()).reduce<Record<string, { points: string; cx: number; cy: number; rotate: boolean }>>((accum, [name, coords]) => {
+  readonly activeRoomName = computed(() => this.housesService.activeRoomName());
+
+  readonly regionsArray = computed(() =>
+    Object.entries(this.regions()).reduce<Record<string, { points: string; cx: number; cy: number; rotate: boolean }>>((accum, [name, coords]) => {
       const xs = coords.map(([x]) => x);
       const ys = coords.map(([, y]) => y);
       const w = Math.max(...xs) - Math.min(...xs);
@@ -25,7 +27,7 @@ export class FloorPlan {
       return {
         ...accum,
         [name]: {
-          points: this.toPoints(coords),
+          points: coords.map(([x, y]) => `${x},${y}`).join(' '),
           cx: xs.reduce((s, x) => s + x, 0) / coords.length,
           cy: ys.reduce((s, y) => s + y, 0) / coords.length,
           rotate: h > w,
@@ -34,17 +36,6 @@ export class FloorPlan {
     }, {})
   );
 
-  private toPoints(coords: [number, number][]): string {
-    return coords.map(([x, y]) => `${x},${y}`).join(' ');
-  }
-
-  readonly activeRoomName = computed(() => this.housesService.activeRoomName());
-
-  onMouseRoomEnter(room: string): void {
-    this.housesService.hoverRoomName.set(room);
-  }
-
-  onMouseRoomLeave(): void {
-    this.housesService.hoverRoomName.set('');
-  }
+  onMouseRoomEnter(room: string) { this.housesService.hoverRoomName.set(room); }
+  onMouseRoomLeave() { this.housesService.hoverRoomName.set(''); }
 }

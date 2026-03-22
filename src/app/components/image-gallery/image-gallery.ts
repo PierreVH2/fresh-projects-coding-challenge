@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, computed, ElementRef, Injector, inject, input, OnDestroy, output, signal, ViewChild, effect } from '@angular/core';
+import { AfterViewInit, Component, computed, effect, ElementRef, inject, Injector, input, OnDestroy, output, signal, ViewChild } from '@angular/core';
 import { HousesService } from '../../services/houses';
 
 interface Dimensions {
@@ -18,13 +18,22 @@ interface Dimensions {
 })
 export class ImageGallery implements AfterViewInit, OnDestroy {
   private injector = inject(Injector);
-  housesService: HousesService = inject(HousesService);
+  private housesService = inject(HousesService);
 
-  readonly dimensions = signal<Dimensions>({ width: 0, height: 0 });
-  singleColMaxSize = input(768);
   orientation = input.required<'horizontal' | 'vertical'>();
   autoScrollPxPerFrame = input(0);
+  singleColMaxSize = input(768);
   scrollEnd = output<void>();
+
+  readonly dimensions = signal<Dimensions>({ width: 0, height: 0 });
+  readonly images = computed(() =>
+    this.housesService.activeRoom()?.images?.map(i => `${this.housesService.house()?.basePath}/${i}`) ?? []
+  );
+  readonly roomName = computed(() => this.housesService.activeRoomName());
+  readonly double = computed(() => {
+    const dim = this.orientation() === 'horizontal' ? this.dimensions().width : this.dimensions().height;
+    return this.images().length > 1 && dim >= this.singleColMaxSize();
+  });
 
   @ViewChild('imageTrack') el!: ElementRef;
   private resizeObserver!: ResizeObserver;
@@ -32,25 +41,21 @@ export class ImageGallery implements AfterViewInit, OnDestroy {
   hovered = false;
 
   ngAfterViewInit() {
-    this.resizeObserver = new ResizeObserver((entries) => {
+    this.resizeObserver = new ResizeObserver(([entry]) => {
       this.dimensions.set({
-        width: entries[0]?.contentRect.width ?? 0,
-        height: entries[0]?.contentRect.height ?? 0,
+        width: entry.contentRect.width,
+        height: entry.contentRect.height,
       });
     });
     this.resizeObserver.observe(this.el.nativeElement);
     effect(() => {
-      if (this.autoScrollPxPerFrame() > 0) {
-        this.startScroll();
-      }
-      else {
-        this.stopScroll();
-      }
+      if (this.autoScrollPxPerFrame() > 0) this.startScroll();
+      else this.stopScroll();
     }, { injector: this.injector });
   }
 
   ngOnDestroy() {
-    this.resizeObserver?.disconnect?.();
+    this.resizeObserver?.disconnect();
     this.stopScroll();
   }
 
@@ -60,28 +65,26 @@ export class ImageGallery implements AfterViewInit, OnDestroy {
     let elapsedFrames = 0;
     const step = () => {
       if (!this.hovered) {
-        const portrait = this.orientation() === 'horizontal';
-        const scrollMax = portrait
+        const horizontal = this.orientation() === 'horizontal';
+        const scrollMax = horizontal
           ? el.scrollWidth - el.clientWidth
           : el.scrollHeight - el.clientHeight;
         const pxPerFrame = this.autoScrollPxPerFrame();
-
         if (scrollMax <= 0) {
-          const viewportSize = portrait ? el.clientWidth : el.clientHeight;
-          const framesNeeded = viewportSize / pxPerFrame;
-          if (++elapsedFrames >= framesNeeded) {
+          const viewportSize = horizontal ? el.clientWidth : el.clientHeight;
+          if (++elapsedFrames >= viewportSize / pxPerFrame) {
             elapsedFrames = 0;
             this.scrollEnd.emit();
           }
         } else {
           elapsedFrames = 0;
-          const current = portrait ? el.scrollLeft : el.scrollTop;
+          const current = horizontal ? el.scrollLeft : el.scrollTop;
           const next = current + pxPerFrame;
           if (next >= scrollMax) {
-            if (portrait) el.scrollLeft = 0; else el.scrollTop = 0;
+            if (horizontal) el.scrollLeft = 0; else el.scrollTop = 0;
             this.scrollEnd.emit();
           } else {
-            if (portrait) el.scrollLeft = next; else el.scrollTop = next;
+            if (horizontal) el.scrollLeft = next; else el.scrollTop = next;
           }
         }
       }
@@ -90,15 +93,5 @@ export class ImageGallery implements AfterViewInit, OnDestroy {
     this.rafId = requestAnimationFrame(step);
   }
 
-  private stopScroll() {
-    cancelAnimationFrame(this.rafId);
-  }
-
-  readonly images = computed(() => this.housesService.activeRoom()?.images?.map((i) => `${this.housesService.house()?.basePath}/${i}`) ?? []);
-  readonly roomName = computed(() => this.housesService.activeRoomName() ?? '');
-
-  readonly double = computed(() => {
-    const criticalDimension = this.orientation() === 'horizontal' ? this.dimensions().width : this.dimensions().height;
-    return this.images().length > 1 && criticalDimension >= this.singleColMaxSize();
-  });
+  private stopScroll() { cancelAnimationFrame(this.rafId); }
 }

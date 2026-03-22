@@ -1,9 +1,8 @@
-import { Injectable, Signal, computed, effect, signal } from '@angular/core';
-import { httpResource, HttpResourceRef } from '@angular/common/http';
+import { Injectable, computed, signal } from '@angular/core';
+import { httpResource } from '@angular/common/http';
 import { StaticDecode, Type } from 'typebox';
-import { Decode, Errors } from 'typebox/value';
+import { Decode } from 'typebox/value';
 
-const HousesListSchema = Type.Array(Type.String());
 const HouseManifestSchema = Type.Object({
   id: Type.String(),
   address: Type.String(),
@@ -20,9 +19,7 @@ const HouseManifestSchema = Type.Object({
 });
 export type HouseManifest = StaticDecode<typeof HouseManifestSchema>;
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class HousesService {
   hoverRoomName = signal('');
   clickedRoomName = signal('');
@@ -32,17 +29,14 @@ export class HousesService {
     this.clickedRoomName() || this.hoverRoomName() || this.defaultRoom()
   );
 
-  private readonly _house = httpResource<HouseManifest|undefined>(() => '/houses/2428742422/manifest.json', {
-    parse: (data) => Decode(HouseManifestSchema, data)
-  });
+  private readonly _house = httpResource<HouseManifest | undefined>(
+    () => '/houses/2428742422/manifest.json',
+    { parse: (data) => Decode(HouseManifestSchema, data) }
+  );
 
-  get house() {
-    return this._house.value;
-  }
+  get house() { return this._house.value; }
 
-  readonly activeRoom = computed(() => {
-    const house = this.house();
-    const roomName = this.activeRoomName();
-    return house?.rooms[roomName];
-  });
+  readonly activeRoom = computed(() =>
+    this.house()?.rooms[this.activeRoomName()]
+  );
 }

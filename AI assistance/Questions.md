@@ -75,3 +75,5 @@ Next write some unit tests for the Responsive service
 Lastly have another look at the houses.spec.ts file - double check that everything should work correctly for an Angular 21 project.
 
 All the unit tests are failing with an error " Expected one matching request for criteria "Match URL: /houses/2428742422/manifest.json", found none"
+
+Clean up the code without making any changes to the logic
