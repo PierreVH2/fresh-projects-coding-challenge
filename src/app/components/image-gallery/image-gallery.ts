@@ -31,8 +31,10 @@ export class ImageGallery implements AfterViewInit, OnDestroy {
   );
   readonly roomName = computed(() => this.housesService.activeRoomName());
   readonly double = computed(() => {
-    const dim = this.orientation() === 'horizontal' ? this.dimensions().width : this.dimensions().height;
-    return this.images().length > 1 && dim >= this.singleColMaxSize();
+    if (this.orientation() === 'horizontal') {
+      return false;
+    }
+    return this.images().length > 1 && this.dimensions().height >= this.singleColMaxSize();
   });
 
   @ViewChild('imageTrack') el!: ElementRef;
@@ -64,28 +66,30 @@ export class ImageGallery implements AfterViewInit, OnDestroy {
     const el: HTMLElement = this.el.nativeElement;
     let elapsedFrames = 0;
     const step = () => {
-      if (!this.hovered) {
-        const horizontal = this.orientation() === 'horizontal';
-        const scrollMax = horizontal
-          ? el.scrollWidth - el.clientWidth
-          : el.scrollHeight - el.clientHeight;
-        const pxPerFrame = this.autoScrollPxPerFrame();
-        if (scrollMax <= 0) {
-          const viewportSize = horizontal ? el.clientWidth : el.clientHeight;
-          if (++elapsedFrames >= viewportSize / pxPerFrame) {
-            elapsedFrames = 0;
-            this.scrollEnd.emit();
-          }
-        } else {
+      if (this.hovered) {
+        this.rafId = requestAnimationFrame(step);
+        return;
+      }
+      const horizontal = this.orientation() === 'horizontal';
+      const scrollMax = horizontal
+        ? el.scrollWidth - el.clientWidth
+        : el.scrollHeight - el.clientHeight;
+      const pxPerFrame = this.autoScrollPxPerFrame();
+      if (scrollMax <= 0) {
+        const viewportSize = horizontal ? el.clientWidth : el.clientHeight;
+        if (++elapsedFrames >= viewportSize / pxPerFrame) {
           elapsedFrames = 0;
-          const current = horizontal ? el.scrollLeft : el.scrollTop;
-          const next = current + pxPerFrame;
-          if (next >= scrollMax) {
-            if (horizontal) el.scrollLeft = 0; else el.scrollTop = 0;
-            this.scrollEnd.emit();
-          } else {
-            if (horizontal) el.scrollLeft = next; else el.scrollTop = next;
-          }
+          this.scrollEnd.emit();
+        }
+      } else {
+        elapsedFrames = 0;
+        const current = horizontal ? el.scrollLeft : el.scrollTop;
+        const next = current + pxPerFrame;
+        if (next >= scrollMax) {
+          if (horizontal) el.scrollLeft = 0; else el.scrollTop = 0;
+          this.scrollEnd.emit();
+        } else {
+          if (horizontal) el.scrollLeft = next; else el.scrollTop = next;
         }
       }
       this.rafId = requestAnimationFrame(step);
