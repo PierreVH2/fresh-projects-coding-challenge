@@ -1,6 +1,9 @@
 {
   "id": "2428742422",
   "address": "1603 Plane St, Engcobo, 5056",
+  "description": "A charming family home in the heart of Engcobo, offering generous living spaces, a private balcony, and a warm, welcoming atmosphere. Ideal for first-time buyers or investors seeking a well-proportioned property in a peaceful setting.",
+  "price": "R 850 000",
+  "thumbnail": "846_2160.jpg",
   "coordinates": {
     "lat": -31.6667,
     "lng": 28.0000
@@ -9,32 +12,34 @@
   "floorPlan": "841_2160_clean.jpg",
   "rooms": {
     "hall": {
+      "description": "A welcoming entrance hall that sets the tone for the rest of the home. Bright and airy, it provides a seamless transition between the front door and the living spaces beyond.",
       "vertices": [[0.075,0.4487], [0.2875,0.4487], [0.2875,0.641], [0.075,0.641]],
       "images": ["853_2160.jpg"]
     },
     "kitchen": {
+      "description": "A well-appointed kitchen designed for both everyday cooking and entertaining. Generous counter space and a practical layout make meal preparation a pleasure, with room for all your modern appliances.",
       "vertices": [[0.075,0.641], [0.2875,0.641], [0.2875,0.9615], [0.075,0.9615]],
       "images": ["825_2160.jpg","855_2160.jpg","873_2160.jpg"]
     },
     "bathroom": {
+      "description": "A clean, modern bathroom finished to a high standard. Thoughtfully designed to maximise space, it offers everything you need to start and end your day in comfort and style.",
       "vertices": [[0.075,0.0641], [0.2875,0.0641], [0.2875,0.4487], [0.075,0.4487]],
       "images": ["826_2160.jpg","856_2160.jpg"]
     },
     "bedroom": {
+      "description": "A spacious and tranquil bedroom bathed in natural light. With ample room for a double bed and storage, this is a true retreat at the end of the day — peaceful, private, and full of potential.",
       "vertices": [[0.2875,0.0641], [0.825,0.0641], [0.825,0.4487], [0.2875,0.4487]],
       "images": ["831_2160.jpg","865_2160.jpg","864_2160.jpg"]
     },
     "lounge": {
+      "description": "An expansive open-plan lounge that is the heart of the home. Perfect for relaxing or hosting guests, the generous proportions and natural light create a warm and inviting atmosphere you will love coming home to.",
       "vertices": [[0.2875,0.4487], [0.975,0.4487], [0.975,0.9615], [0.2875,0.9615]],
       "images": ["824_2160.jpg","860_2160.jpg","861_2160.jpg","863_2160.jpg"]
     },
     "balcony": {
+      "description": "Step outside onto this charming balcony and enjoy sweeping views of the surrounding area. Whether you are sipping your morning coffee or unwinding at sunset, this outdoor space adds a touch of luxury to everyday living.",
       "vertices": [[0.825,0.0641], [0.975,0.0641], [0.975,0.4487], [0.825,0.4487]],
       "images": ["832_2160.jpg","866_2160.jpg"]
-    },
-    "outside": {
-      "vertices": [[0,0.0641], [0.075,0.0641], [0.075,0.9615], [0,0.9615]],
-      "images": ["846_2160.jpg"]
     }
   }
 }

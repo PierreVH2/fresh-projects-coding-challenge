@@ -79,3 +79,29 @@ All the unit tests are failing with an error " Expected one matching request for
 Clean up the code without making any changes to the logic
 
 Update the README.md. This project is a technical assesssment for a job interview. Summarise the features of the app and explain how to run and test the app.
+
+In public/houses/**/manifest.json, for each room add a description as if it's marketing a room to potential renters/buyers
+
+Implement the house-heading component - it should receive a thumbnail image, heading, subheading and description inputs. The image should be on the left 25% of the width with the rest of the content making up the remaining 75% of the width. The heading, subheading and description should be stacked - heading bold and large text, subheading medium text italicised and the description normal.
+
+Add the hiouse-heading component to App component above the floor-plan component.
+
+The floor-plan component is overflowing its bounds
+
+Great. Fix the stacked layout as well - in this layout house-heading should be top-left, floor-plan top-right and image-gallery at the bottom
+
+That's great. Add another breakpoint in App for Mobile size devices where the heading, floor plan and image gallery are all stacked
+
+Change the App component such that the content is spaced evenly on the screen
+
+That didn't work as expected, it seems the image-gallery component is swallowing up the extra height in portrait view.
+
+Within the App component nav-container the floor-plan component should get all the extra space of its parent and house-heading should get none
+
+It looks good in landscape, but now portrait view is broken: the floor-plan component has width 0
+
+In narrow portrait the contents of nav-container are overflowing
+
+In portrait mode, ensure the image-gallery is at least 300px in height. Scroll the whole page vertically if necessary.
+
+Fix the failing unit tests

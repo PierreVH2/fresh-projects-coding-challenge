@@ -13,8 +13,8 @@ export class Responsive {
 
   readonly breakpoint = computed<'mobile' | 'tablet' | 'desktop'>(() => {
     const size = Math.max(this.width(), this.height());
-    if (size < 768) return 'mobile';
-    if (size < 1024) return 'tablet';
+    if (size < 1024) return 'mobile';
+    if (size < 1366) return 'tablet';
     return 'desktop';
   });
 

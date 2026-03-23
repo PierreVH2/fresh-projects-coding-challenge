@@ -1,5 +1,11 @@
 <div class="app-container" [class.side-by-side]="sideBySide()">
-  <div class="floor-plan-container">
+  <div class="nav-container" [class.mobile]="isMobile()">
+    <app-house-heading
+      [thumbnail]="houseThumbnail()"
+      [heading]="houseAddress()"
+      [subheading]="housePrice()"
+      [description]="houseDescription()"
+    ></app-house-heading>
     <app-floor-plan
       [image]="houseFloorPlan()"
       [regions]="houseRegions()"
@@ -13,6 +19,9 @@
         <input type="checkbox" [checked]="autoScroll()" (change)="autoScroll.set($any($event.target).checked)" />
         Auto-scroll
       </label>
+    </div>
+    <div class="room-description">
+      {{ roomDescription() }}
     </div>
     <app-image-gallery
       [orientation]="sideBySide() ? 'vertical' : 'horizontal'"

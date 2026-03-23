@@ -8,8 +8,11 @@ const mockHouse = signal<HouseManifest>({
   address: '1 Test St',
   basePath: '/houses/1',
   floorPlan: 'plan.jpg',
+  thumbnail: 'thumb.jpg',
+  description: 'description',
+  price: 'R50 pm',
   rooms: {
-    kitchen: { vertices: [], images: ['a.jpg', 'b.jpg'] },
+    kitchen: { vertices: [], images: ['a.jpg', 'b.jpg'], description: 'description' },
   }
 });
 const activeRoomName = signal<string>('');

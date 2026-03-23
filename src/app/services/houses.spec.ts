@@ -8,11 +8,14 @@ const MANIFEST_URL = '/houses/2428742422/manifest.json';
 const mockManifest = {
   id: '1',
   address: '1 Test St',
+  thumbnail: 'thumb.jpg',
+  description: 'A test property',
+  price: 'R 100 000',
   basePath: '/houses/1',
   floorPlan: 'plan.jpg',
   rooms: {
-    kitchen: { vertices: [[0.1, 0.1], [0.5, 0.1], [0.5, 0.5], [0.1, 0.5]] as [number,number][], images: ['a.jpg'] },
-    lounge:  { vertices: [[0.5, 0.1], [0.9, 0.1], [0.9, 0.5], [0.5, 0.5]] as [number,number][], images: [] },
+    kitchen: { description: 'The kitchen', vertices: [[0.1, 0.1], [0.5, 0.1], [0.5, 0.5], [0.1, 0.5]] as [number,number][], images: ['a.jpg'] },
+    lounge:  { description: 'The lounge',  vertices: [[0.5, 0.1], [0.9, 0.1], [0.9, 0.5], [0.5, 0.5]] as [number,number][], images: [] },
   }
 };
 

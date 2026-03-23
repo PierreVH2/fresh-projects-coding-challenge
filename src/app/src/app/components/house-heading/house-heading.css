@@ -1,0 +1,41 @@
+.house-heading-top {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+img {
+  width: 30%;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.content {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-sm, 8px);
+  padding: var(--spacing-md, 16px);
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary, #212121);
+}
+
+h2 {
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-text-secondary, #757575);
+}
+
+p {
+  font-size: 0.875rem;
+  font-weight: 400;
+  color: var(--color-text-primary, #212121);
+  line-height: 1.5;
+  text-align: justify;
+}

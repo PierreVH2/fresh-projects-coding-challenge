@@ -6,11 +6,20 @@ import { HousesService } from './services/houses';
 import { Responsive } from './services/responsive';
 import { FloorPlan } from './components/floor-plan/floor-plan';
 import { ImageGallery } from './components/image-gallery/image-gallery';
+import { HouseHeading } from './src/app/components/house-heading/house-heading';
 
 @Component({ selector: 'app-floor-plan', template: '', standalone: true })
 class MockFloorPlan {
   @Input() image = '';
   @Input() regions: Record<string, [number, number][]> = {};
+}
+
+@Component({ selector: 'app-house-heading', template: '', standalone: true })
+class MockHouseHeading {
+  @Input() thumbnail = '';
+  @Input() heading = '';
+  @Input() subheading = '';
+  @Input() description = '';
 }
 
 @Component({ selector: 'app-image-gallery', template: '', standalone: true })
@@ -26,6 +35,7 @@ const mockDefaultRoom = signal('');
 const mockActiveRoomName = computed(() =>
   mockClickedRoomName() || mockHoverRoomName() || mockDefaultRoom()
 );
+const mockActiveRoom = computed(() => undefined);
 
 const mockHousesService: Partial<HousesService> = {
   house: mockHouse,
@@ -33,6 +43,7 @@ const mockHousesService: Partial<HousesService> = {
   hoverRoomName: mockHoverRoomName,
   defaultRoom: mockDefaultRoom,
   activeRoomName: mockActiveRoomName,
+  activeRoom: mockActiveRoom,
 };
 
 const mockWidth = signal(1024);
@@ -40,6 +51,7 @@ const mockHeight = signal(768);
 
 const mockResponsive: Partial<Responsive> = {
   orientation: computed(() => mockWidth() >= mockHeight() ? 'landscape' : 'portrait'),
+  breakpoint: computed(() => 'desktop' as const),
   width: mockWidth,
   height: mockHeight,
 };
@@ -57,8 +69,8 @@ describe('Given App component', () => {
       ],
     })
     .overrideComponent(App, {
-      remove: { imports: [FloorPlan, ImageGallery] },
-      add: { imports: [MockFloorPlan, MockImageGallery] },
+      remove: { imports: [FloorPlan, ImageGallery, HouseHeading] },
+      add: { imports: [MockFloorPlan, MockImageGallery, MockHouseHeading] },
     })
     .compileComponents();
 

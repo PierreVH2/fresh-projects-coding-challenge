@@ -6,6 +6,9 @@ import { Decode } from 'typebox/value';
 const HouseManifestSchema = Type.Object({
   id: Type.String(),
   address: Type.String(),
+  thumbnail: Type.String(),
+  description: Type.String(),
+  price: Type.String(),
   coordinates: Type.Optional({
     lat: Type.Number(),
     lng: Type.Number(),
@@ -13,6 +16,7 @@ const HouseManifestSchema = Type.Object({
   basePath: Type.String(),
   floorPlan: Type.String(),
   rooms: Type.Record(Type.String(), Type.Object({
+    description: Type.String(),
     vertices: Type.Array(Type.Tuple([Type.Number(), Type.Number()])),
     images: Type.Array(Type.String()),
   }))

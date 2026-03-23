@@ -73,10 +73,10 @@ describe('Given Responsive service', () => {
     });
   });
 
-  describe('and the largest dimension is between 768 and 1023', () => {
+  describe('and the largest dimension is between 1024 and 1366', () => {
     beforeEach(() => {
-      service.width.set(600);
-      service.height.set(900);
+      service.width.set(1024);
+      service.height.set(1365);
     });
 
     it('breakpoint should be tablet', () => {
@@ -84,10 +84,10 @@ describe('Given Responsive service', () => {
     });
   });
 
-  describe('and the largest dimension is 1024 or above', () => {
+  describe('and the largest dimension is 1366 or above', () => {
     beforeEach(() => {
-      service.width.set(1024);
-      service.height.set(768);
+      service.width.set(1366);
+      service.height.set(1024);
     });
 
     it('breakpoint should be desktop', () => {
